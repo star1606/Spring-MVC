@@ -1,8 +1,12 @@
 package me.lee.demowebmvc;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -23,7 +27,7 @@ public class SampleControllerTest {
 	
 	@Test
 	public void helloTest() throws Exception {
-		mockMvc.perform(get("/hello")
+		mockMvc.perform(options("/hello")
 				.header(HttpHeaders.FROM, "localhost")
 				// header에 [From:"localhost"] 이렇게 보내짐
 				.param("name", "lee")
@@ -33,6 +37,13 @@ public class SampleControllerTest {
 		
 			.andDo(print())
 			.andExpect(status().isOk())
+			.andExpect(header().stringValues(HttpHeaders.ALLOW, 
+					hasItems(
+							containsString("GET"),
+							containsString("POST"),
+							containsString("HEAD"),
+							containsString("OPTIONS")
+							)))
 			//.andExpect(content().string("hello"))
 			//.andExpect(status().isMethodNotAllowed())
 		;
