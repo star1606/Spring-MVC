@@ -35,7 +35,7 @@ public class SampleController {
 	}
 	
 	
-	@PostMapping("/hello")
+	@GetHelloMapping
 	@ResponseBody
 	public String helloPost() {
 		return "hello";
