@@ -28,6 +28,7 @@ public class SampleController {
 			// plain text의 응답을 원하는 요청만 처리해줌
 	)
 	@ResponseBody
+	//@GetMapping(value = "/hello", params = "name=lee")
 	public String hello() {
 		return "hello";
 	}
