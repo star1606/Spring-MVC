@@ -3,10 +3,12 @@ package me.lee.demowebmvc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -48,5 +50,19 @@ public class SampleControllerTest {
 			//.andExpect(status().isMethodNotAllowed())
 		;
 	}
+	
+	
+	
+	// URI 패턴 Test
+	@Test
+	public void deleteEvent() throws Exception {
+		mockMvc.perform(get("/events/1"))
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("id").value(1))
+		;
+	}
+	
+	
 	
 }
