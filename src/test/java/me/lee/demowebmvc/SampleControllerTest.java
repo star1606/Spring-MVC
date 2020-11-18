@@ -27,54 +27,54 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest
 public class SampleControllerTest {
 
-	@Autowired
-	MockMvc mockMvc;
-	
-	@Test
-	public void helloTest() throws Exception {
-		mockMvc.perform(options("/hello")
-				.header(HttpHeaders.FROM, "localhost")
-				// header에 [From:"localhost"] 이렇게 보내짐
-				.param("name", "lee")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-		)
-		
-			.andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(header().stringValues(HttpHeaders.ALLOW, 
-					hasItems(
-							containsString("GET"),
-							containsString("POST"),
-							containsString("HEAD"),
-							containsString("OPTIONS")
-							)))
+//	@Autowired
+//	MockMvc mockMvc;
+//	
+//	@Test
+//	public void helloTest() throws Exception {
+//		mockMvc.perform(options("/hello")
+//				.header(HttpHeaders.FROM, "localhost")
+//				// header에 [From:"localhost"] 이렇게 보내짐
+//				.param("name", "lee")
+//				.contentType(MediaType.APPLICATION_JSON)
+//				.accept(MediaType.APPLICATION_JSON)
+//		)
+//		
+//			.andDo(print())
+//			.andExpect(status().isOk())
+//			.andExpect(header().stringValues(HttpHeaders.ALLOW, 
+//					hasItems(
+//							containsString("GET"),
+//							containsString("POST"),
+//							containsString("HEAD"),
+//							containsString("OPTIONS")
+//							)))
 			//.andExpect(content().string("hello"))
 			//.andExpect(status().isMethodNotAllowed())
-		;
-	}
+//		;
+//	}
 	
 	
 	
 	// URI 패턴 Test
-	@Test
-	public void deleteEvent() throws Exception {
-		mockMvc.perform(get("/events/1"))
-			.andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(jsonPath("id").value(1))
-		;
-	}
+//	@Test
+//	public void deleteEvent() throws Exception {
+//		mockMvc.perform(get("/events/1"))
+//			.andDo(print())
+//			.andExpect(status().isOk())
+//			.andExpect(jsonPath("id").value(1))
+//		;
+//	}
 	
 	
-	@Test
-	public void postEvent() throws Exception {
-		mockMvc.perform(post("/events/?name=keesun"))
-			.andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(jsonPath("name").value("keesun"))
-		;
-	}
+//	@Test
+//	public void postEvent() throws Exception {
+//		mockMvc.perform(post("/events/?name=keesun"))
+//			.andDo(print())
+//			.andExpect(status().isOk())
+//			.andExpect(jsonPath("name").value("keesun"))
+//		;
+//	}
 	
 	
 }

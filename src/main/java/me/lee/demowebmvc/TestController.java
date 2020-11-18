@@ -20,11 +20,11 @@ public class TestController {
 
 	
 	// 1번
-	@GetMapping("/events")
-	@ResponseBody
-	public String events(InputStream requestBody, OutputStream responseBody) {
-		return "events";
-	}
+//	@GetMapping("/events")
+//	@ResponseBody
+//	public String events(InputStream requestBody, OutputStream responseBody) {
+//		return "events";
+//	}
 	
 	// InputStream requestBody, OutputStream responseBody
 	// InputStream으로 요청의 본문의 데이터를 읽어 오는 것(Reader)
@@ -39,54 +39,58 @@ public class TestController {
 	
 	
 	// 2번
-	@GetMapping("/events/{id}")
-	@ResponseBody
-	public String getEvents(@PathVariable int id) {
-		return "events";
-	}
-	
+//	@GetMapping("/events/{id}")
+//	@ResponseBody
+//	public String getEvents(@PathVariable int id) {
+//		return "events";
+//	}
+//	
 	
 	// 3번
-	@PostMapping(
-			value = "/events",
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public String createEvent() {
-		return "event";
-	}
+//	@PostMapping(
+//			value = "/events",
+//			consumes = MediaType.APPLICATION_JSON_VALUE,
+//			produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public String createEvent() {
+//		return "event";
+//	}
 	
 	
 	// 4번
-	@DeleteMapping("/events/{id}")
-	@ResponseBody
-	public String removeEvents(@PathVariable int id) {
-		return "event";
-	}
+//	@DeleteMapping("/events/{id}")
+//	@ResponseBody
+//	public String removeEvents(@PathVariable int id) {
+//
+//		return "event";
+//	}
 
 	
 	// 5번
-	@PutMapping(
-			value = "/events",
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public String updateEvent() {
-		return "event";
-	}
+//	@PutMapping(
+//			value = "/events",
+//			consumes = MediaType.APPLICATION_JSON_VALUE,
+//			produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public String updateEvent() {
+//		return "event";
+//	}
 	
 	
 	
-	@GetMapping("/events/{id}")
-	@ResponseBody
-	// 문자열을 Integer로 자동으로 바꿔줌
-	// Optional<> null 존재 여부 확인 가능함
-	public Event getEvent(@PathVariable Integer id, @MatrixVariable String name) {
-		Event event = new Event();
-		event.setId(id);
-		event.setName(name);
-		return event;
-	}
+	
+	
+	
+//	@GetMapping("/events/{id}")
+//	@ResponseBody
+//	// 문자열을 Integer로 자동으로 바꿔줌
+//	// Optional<> null 존재 여부 확인 가능함
+//	public Event getEvent(@PathVariable Integer id, @MatrixVariable String name) {
+//		Event event = new Event();
+//		event.setId(id);
+//		event.setName(name);
+//		return event;
+//	}
 	
 	
 }
