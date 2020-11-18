@@ -1,11 +1,14 @@
 package me.lee.demowebmvc;
 
+import java.util.Map;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -43,6 +46,16 @@ public class SampleController {
 	
 	
 
+	@GetMapping("/events/{id}?name=keesun")
+	@ResponseBody
+	public Event getEvent(@RequestParam String name, 
+						  @RequestParam Integer limit)
+	{
+		Event event = new Event();
+		event.setName(name);
+		event.setLimit(limit);
+		return event;
+	}
 	
 	
 	

@@ -79,7 +79,7 @@ public class TestController {
 	
 	@GetMapping("/events/{id}")
 	@ResponseBody
-	// 문자열을 Integer로 바궈줌
+	// 문자열을 Integer로 자동으로 바꿔줌
 	// Optional<> null 존재 여부 확인 가능함
 	public Event getEvent(@PathVariable Integer id, @MatrixVariable String name) {
 		Event event = new Event();
