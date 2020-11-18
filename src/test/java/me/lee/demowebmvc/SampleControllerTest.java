@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest
 public class SampleControllerTest {
 
-//	@Autowired
-//	MockMvc mockMvc;
+	@Autowired
+	MockMvc mockMvc;
 //	
 //	@Test
 //	public void helloTest() throws Exception {
@@ -76,5 +76,16 @@ public class SampleControllerTest {
 //		;
 //	}
 	
+	
+	@Test 
+	public void postEvent() throws Exception {
+		mockMvc.perform(post("/events/name/keesun")
+				.param("limit", "-10"))
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("name").value("keesun"))
+		;	
+		
+	}
 	
 }
