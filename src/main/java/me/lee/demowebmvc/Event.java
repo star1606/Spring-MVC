@@ -1,10 +1,16 @@
 package me.lee.demowebmvc;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 public class Event {
 
+//	interface ValidateLimit {}
+//	interface ValidateName {}
+	
 	private Integer id;
+	
+	@NotBlank
 	private String name;
 	
 	@Min(0)
