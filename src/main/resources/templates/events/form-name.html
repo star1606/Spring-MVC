@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Create New Event</title>
+</head>
+<body>
+	<!--@{} : URL을 상황에 맞게 잘 만들어준다 -->  
+	<!-- ${} : 모델에다 넣어준 데이터를 참조 우리는 Model에다가 new Event() 객체를 넣었음 -->
+	<!--  *{} : 객체 안에 들어있는 특정한 필드 값을 selection한다. -->
+	<form action="#" th:action="@{/events/form/name}" method="POST" th:object="${event}">
+		<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> Incorrect Date</p>
+		Name: <input type="text" title="name" th:field="*{name}" />
+		<input type="submit" value="Create" />	
+	</form>
+</body>
+</html>

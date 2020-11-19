@@ -37,9 +37,7 @@ public class SampleController {
 //	}
 
 	// JSON요청만 처리하겠다 -> 헤더에 json설정해서 보내야됨(contentType)
-	@GetMapping(value = "/hello", 
-				consumes = MediaType.APPLICATION_JSON_VALUE,
-				produces = MediaType.TEXT_PLAIN_VALUE
+	@GetMapping(value = "/hello", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE
 	// plain text의 응답을 원하는 요청만 처리해줌
 	)
 	@ResponseBody
@@ -56,15 +54,11 @@ public class SampleController {
 
 	///////////////////////////////////////////////////////////////////////////////////////
 
-	@GetMapping("/events/form")
-	public String eventsForm(Model model, SessionStatus sessionStatus) {
-		Event newEvent = new Event();
-		newEvent.setLimit(50);
+	@GetMapping("/events/form/name")
+	public String eventsFormName(Model model) {
 		// 화면에 어떤 model(데이터, 뷰)을 제공할 것인가에 대한 내용
-		model.addAttribute("event", newEvent); // Event 객체를 넘겨준다.
-		//httpSession.setAttribute("event", newEvent);
-		sessionStatus.setComplete(); // 세션비우기
-		return "events/form";
+		model.addAttribute("event", new Event()); // Event 객체를 넘겨준다.
+		return "events/form-name";
 	}
 
 	// @GetMapping("/events/{id}?name=keesun") param string
@@ -80,39 +74,62 @@ public class SampleController {
 //		return event;
 //	}
 
-	@PostMapping("/events")
-	//먼저 @ModelAttribute로 데이터 바인딩되고 @Valid 수행
-	//그 다음 에러를 bindingResult에다가 담음
-	public String createEvent(@Validated @ModelAttribute Event event, 
-							BindingResult bindingResult
-							) {
-		
-		if(bindingResult.hasErrors()) {
-			return "/events/form";
+	@PostMapping("/events/form/name")
+	// 먼저 @ModelAttribute로 데이터 바인딩되고 @Valid 수행
+	// 그 다음 에러를 bindingResult에다가 담음
+	public String eventFormNameSubmit(@Validated @ModelAttribute Event event, BindingResult bindingResult
+	)
+	{
+
+		if (bindingResult.hasErrors()) {
+			return "/events/form-name";
 		}
-		
+		return "redirect:/events/form/limit";
+	}
+
+	@GetMapping("/events/form/limit")
+	public String eventsFormLimit(@ModelAttribute Event event, Model model) {
+		// 화면에 어떤 model(데이터, 뷰)을 제공할 것인가에 대한 내용
+		System.out.println("limit 맵핑 event: " + (event).getName());
+		System.out.println("limit 맵핑 event: " + (event).getLimit());
+		model.addAttribute("event", event); 
+		return "events/form-limit";
+	}
+
+	@PostMapping("/events/form/limit")
+	// 먼저 @ModelAttribute로 데이터 바인딩되고 @Valid 수행
+	// 그 다음 에러를 bindingResult에다가 담음
+	public String eventFormLimitSubmit(@Validated @ModelAttribute Event event, BindingResult bindingResult,
+			SessionStatus sessionStatus
+
+	) 
+	{
+		System.out.println("limit post맵핑 event: " + (event).getName());
+		System.out.println("limit post맵핑 limit: " + (event).getLimit());
+		if (bindingResult.hasErrors()) {
+			return "/events/form-limit";
+		}
+		sessionStatus.setComplete();
 		return "redirect:/events/list";
 	}
 
-	
 	@GetMapping("/events/list")
 	public String getEvents(Model model) {
-		// 데이터베이스 데이터를 읽어옴, 
+		// 데이터베이스 데이터를 읽어옴,
 		// 밑에코드는 데이터 들어왔다고 가정한 더미테이터
 		// save
 		Event event = new Event();
 		event.setName("spring");
 		event.setLimit(10);
-		
+
 		List<Event> eventList = new ArrayList<>();
 		eventList.add(event);
-		
+
 		model.addAttribute(eventList);
-		
+
 		return "/events/list";
 	}
-	
-	
+
 	// postman으로 테스트하는게 더 편하다
 
 }
