@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
+@SessionAttributes("event")
 // 클래스 레벨로 설정도 가능 @RequestMapping(method = RequestMethod.GET)
 public class SampleController {
 
@@ -54,12 +57,13 @@ public class SampleController {
 	///////////////////////////////////////////////////////////////////////////////////////
 
 	@GetMapping("/events/form")
-	public String eventsForm(Model model, HttpSession httpSession) {
+	public String eventsForm(Model model, SessionStatus sessionStatus) {
 		Event newEvent = new Event();
 		newEvent.setLimit(50);
 		// 화면에 어떤 model(데이터, 뷰)을 제공할 것인가에 대한 내용
 		model.addAttribute("event", newEvent); // Event 객체를 넘겨준다.
-		httpSession.setAttribute("event", newEvent);
+		//httpSession.setAttribute("event", newEvent);
+		sessionStatus.setComplete(); // 세션비우기
 		return "events/form";
 	}
 
