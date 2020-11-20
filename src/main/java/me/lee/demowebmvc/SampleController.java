@@ -1,5 +1,6 @@
 package me.lee.demowebmvc;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -114,10 +116,11 @@ public class SampleController {
 	}
 
 	@GetMapping("/events/list")
-	public String getEvents(Model model) {
+	public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime) {
 		// 데이터베이스 데이터를 읽어옴,
 		// 밑에코드는 데이터 들어왔다고 가정한 더미테이터
 		// save
+		System.out.println(visitTime); // 방문시간 찍힘
 		Event event = new Event();
 		event.setName("spring");
 		event.setLimit(10);
