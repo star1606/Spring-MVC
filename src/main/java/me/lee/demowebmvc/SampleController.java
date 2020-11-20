@@ -105,22 +105,24 @@ public class SampleController {
 	public String eventFormLimitSubmit(@Validated @ModelAttribute Event event,
 									   BindingResult bindingResult,
 									   SessionStatus sessionStatus,
-									   RedirectAttributes redirectAttributes
+									   RedirectAttributes attributes
 	) 
 	{
 		System.out.println("limit post맵핑 event: " + (event).getName());
 		System.out.println("limit post맵핑 limit: " + (event).getLimit());
-		redirectAttributes.addAttribute("name", event.getName());
-		redirectAttributes.addAttribute("limit", event.getLimit());
+		//redirectAttributes.addAttribute("name", event.getName());
+		//redirectAttributes.addAttribute("limit", event.getLimit());
 		if (bindingResult.hasErrors()) {
 			return "/events/form-limit";
 		}
 		sessionStatus.setComplete();
+		attributes.addFlashAttribute("newEvent", event);
+		
 		return "redirect:/events/list";
 	}
 
 	@GetMapping("/events/list")
-	public String getEvents(@ModelAttribute("newEvent") Event event,
+	public String getEvents(//@ModelAttribute("newEvent") Event event, Flash Attributes는 Model에 바로 들어옴
 							Model model,
 							@SessionAttribute LocalDateTime visitTime) {
 		// 데이터베이스 데이터를 읽어옴,
@@ -133,9 +135,12 @@ public class SampleController {
 		spring.setName("spring");
 		spring.setLimit(10);
 
+		Event newEvent = (Event)model.asMap().get("newEvent");
+		
 		List<Event> eventList = new ArrayList<>();
 		eventList.add(spring);
-		eventList.add(event);
+		eventList.add(newEvent);
+		//eventList.add(event);
 		
 		model.addAttribute(eventList);
 

@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,21 @@ public class SampleControllerTest {
 			.andExpect(jsonPath("name").value("keesun"))
 		;	
 		
+	}
+	
+	@Test
+	public void getEvents() throws Exception {
+		Event newEvent = new Event();
+		newEvent.setName("Winter is coming");
+		newEvent.setLimit(10000);
+		
+		
+		mockMvc.perform(get("/events/list")
+				.sessionAttr("visitTime", LocalDateTime.now())
+				.flashAttr("newEvent", newEvent))
+					.andDo(print())
+					.andExpect(status().isOk());
+			
 	}
 	
 }
