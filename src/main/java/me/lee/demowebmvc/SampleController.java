@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @SessionAttributes("event")
@@ -101,13 +102,16 @@ public class SampleController {
 	@PostMapping("/events/form/limit")
 	// 먼저 @ModelAttribute로 데이터 바인딩되고 @Valid 수행
 	// 그 다음 에러를 bindingResult에다가 담음
-	public String eventFormLimitSubmit(@Validated @ModelAttribute Event event, BindingResult bindingResult,
-			SessionStatus sessionStatus
-
+	public String eventFormLimitSubmit(@Validated @ModelAttribute Event event,
+									   BindingResult bindingResult,
+									   SessionStatus sessionStatus,
+									   RedirectAttributes redirectAttributes
 	) 
 	{
 		System.out.println("limit post맵핑 event: " + (event).getName());
 		System.out.println("limit post맵핑 limit: " + (event).getLimit());
+		redirectAttributes.addAttribute("name", event.getName());
+		redirectAttributes.addAttribute("limit", event.getLimit());
 		if (bindingResult.hasErrors()) {
 			return "/events/form-limit";
 		}
@@ -116,18 +120,23 @@ public class SampleController {
 	}
 
 	@GetMapping("/events/list")
-	public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime) {
+	public String getEvents(@ModelAttribute("newEvent") Event event,
+							Model model,
+							@SessionAttribute LocalDateTime visitTime) {
 		// 데이터베이스 데이터를 읽어옴,
 		// 밑에코드는 데이터 들어왔다고 가정한 더미테이터
 		// save
 		System.out.println(visitTime); // 방문시간 찍힘
-		Event event = new Event();
-		event.setName("spring");
-		event.setLimit(10);
+		
+		
+		Event spring = new Event();
+		spring.setName("spring");
+		spring.setLimit(10);
 
 		List<Event> eventList = new ArrayList<>();
+		eventList.add(spring);
 		eventList.add(event);
-
+		
 		model.addAttribute(eventList);
 
 		return "/events/list";
