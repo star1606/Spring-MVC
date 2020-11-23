@@ -3,6 +3,7 @@ package me.lee.demowebmvc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.xpath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
@@ -96,13 +97,12 @@ public class SampleControllerTest {
 		newEvent.setName("Winter is coming");
 		newEvent.setLimit(10000);
 		
-		
 		mockMvc.perform(get("/events/list")
 				.sessionAttr("visitTime", LocalDateTime.now())
 				.flashAttr("newEvent", newEvent))
 					.andDo(print())
 					.andExpect(status().isOk());
-			
+					//.andExpect(xp) xpath 문법안됨
 	}
 	
 }
